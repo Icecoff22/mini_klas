@@ -18,8 +18,8 @@ public class LecturePlanDTO {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "lecture_id")
-    private int lecture_id;
+    @Column(name = "lectureid")
+    private int lectureId;
 
     @Column(name = "summary")
     private String summary;
@@ -30,7 +30,7 @@ public class LecturePlanDTO {
 
     @OneToOne
     @JoinTable(name = "Lecture",
-    joinColumns = @JoinColumn(name = "lecture_id"),
-    inverseJoinColumns = @JoinColumn(name = "id"))
+            joinColumns = @JoinColumn(name = "lecture_id"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
     private LectureDTO lectureDTO;
 }

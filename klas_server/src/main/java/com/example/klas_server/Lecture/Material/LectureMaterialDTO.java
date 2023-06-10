@@ -15,12 +15,18 @@ public class LectureMaterialDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int lecture_id;
+
+    @Column(name = "lectureid")
+    private int lectureid;
     @Column(name = "title")
     private String title;
     @Column(name = "content")
     private String content;
 
-    @Column(name = "material_address")
-    private Date material_address;
+    @Column(name = "materialaddress")
+    private String materialaddress;
+    @Column(name = "author")
+    private String author;
+    @Column(name = "date")
+    private String date;
 }
