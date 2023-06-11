@@ -19,14 +19,36 @@ public class LecturePlanDTO {
     private int id;
 
     @Column(name = "lectureid")
-    private int lectureId;
+    private int lectureid;
 
     @Column(name = "summary")
     private String summary;
-    @Column(name = "evaluation_ratio")
-    private String evaluation_ratio;
+    @Column(name = "attendratio")
+    private int attendratio;
+
+    @Column(name = "midexamratio")
+    private int midexamratio;
+
+    @Column(name = "finalexamratio")
+    private int finalexamratio;
+
+    @Column(name = "assignmentratio")
+    private int assignmentratio;
+
+    @Column(name = "attituderatio")
+    private int attituderatio;
+
+    @Column(name = "quizratio")
+    private int quizratio;
     @Column(name = "textbook")
     private String textbook;
+
+    @Column(name = "remote")
+    private boolean remote;
+
+    @Column(name = "goal")
+    private String goal;
+
 
     @OneToOne
     @JoinTable(name = "Lecture",

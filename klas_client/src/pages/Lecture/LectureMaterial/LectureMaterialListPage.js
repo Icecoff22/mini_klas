@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function LectureMaterialListPage() {
   const hardcoding = [
@@ -9,6 +10,7 @@ function LectureMaterialListPage() {
     { lectureid: 4, name: "알고리즘" },
   ];
 
+  const navigate = useNavigate();
   const [output, setOutput] = useState([]);
 
   const [currentSubject, setCurrentSubject] = useState("과목을 선택해주세요");
@@ -47,7 +49,21 @@ function LectureMaterialListPage() {
     const result = [];
     for (let i = 0; i < lecturelist.length; i++) {
       result.push(
-        <button class="flex flex-row justify-center w-full " onClick={() => {}}>
+        <button
+          class="flex flex-row justify-center w-full "
+          onClick={() => {
+            navigate("/lecture/material/detail", {
+              state: {
+                title: lecturelist[i].title,
+                content: lecturelist[i].content,
+                materialname: lecturelist[i].materialname,
+                materialaddress: lecturelist[i].materialaddress,
+                author: lecturelist[i].author,
+                date: lecturelist[i].date,
+              },
+            });
+          }}
+        >
           <div class="border border-black w-full">{i + 1}</div>
           <div class="border border-black w-full">{lecturelist[i].title}</div>
           <div class="border border-black w-full">{lecturelist[i].author}</div>
@@ -61,7 +77,9 @@ function LectureMaterialListPage() {
   return (
     <div class="flex flex-col justify-center items-center h-screen border bg-gradient-to-b from-white to-[#C8D6E8]">
       <div class="flex justify-center flex-col items-center h-[600px] w-[1400px] border border-black">
-        <div class="flex justify-start w-[90%] h-[10%] mt-4">강의자료실</div>
+        <div class="flex justify-start w-[90%] h-[10%] mt-4 text-[40px]">
+          강의 자료실
+        </div>
 
         <form
           onSubmit={handleSubmit}

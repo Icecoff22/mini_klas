@@ -23,6 +23,9 @@ public class LectureMaterialDTO {
     @Column(name = "content")
     private String content;
 
+    @Column(name = "materialname")
+    private String materialname;
+
     @Column(name = "materialaddress")
     private String materialaddress;
     @Column(name = "author")

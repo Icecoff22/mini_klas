@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function LecturePlanListPage() {
   const data = [
     { id: 1, title: "전체" },
     { id: 2, title: "수강과목" },
   ];
-
+  const navigate = useNavigate();
   // 체크된 아이템을 담을 배열
   const [checkItems, setCheckItems] = useState([]);
 
@@ -83,7 +84,16 @@ function LecturePlanListPage() {
     const result = [];
     for (let i = 0; i < lecturelist.length; i++) {
       result.push(
-        <button class="flex flex-row justify-center w-full " onClick={() => {}}>
+        <button
+          class="flex flex-row justify-center w-full "
+          onClick={() => {
+            navigate("/lecture/plan/detail", {
+              state: {
+                lectureid: lecturelist[i].id,
+              },
+            });
+          }}
+        >
           <div class="border border-black w-full">
             {lecturelist[i].lecturename}
           </div>
@@ -106,7 +116,7 @@ function LecturePlanListPage() {
   return (
     <div class="flex flex-col justify-center items-center h-screen border bg-gradient-to-b from-white to-[#C8D6E8]">
       <div class="flex justify-center flex-col items-center h-[600px] w-[1400px] border border-black ">
-        <div class="flex justify-start  w-[90%] h-[10%] mt-4">
+        <div class="flex justify-start  w-[90%] h-[10%] mt-4 text-[35px]">
           강의계획서 조회
         </div>
 
