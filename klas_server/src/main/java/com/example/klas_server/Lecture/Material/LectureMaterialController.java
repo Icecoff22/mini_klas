@@ -1,7 +1,5 @@
 package com.example.klas_server.Lecture.Material;
 
-import com.example.klas_server.Lecture.Lecture.LectureDTO;
-import com.example.klas_server.Lecture.Lecture.LectureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/lecture/material")
 @CrossOrigin
-public class LectureMaterialContoller {
+public class LectureMaterialController {
 
     private final LectureMaterialService lectureMaterialService;
 
