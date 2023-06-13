@@ -11,7 +11,10 @@ import LectureMaterialListPage from "./pages/Lecture/LectureMaterial/LectureMate
 import LectureMaterialDetailPage from "./pages/Lecture/LectureMaterial/LectueMaterialDetailPage";
 import LectureNoticeDetailPage from "./pages/Lecture/LectureNotice/LectureNoticeDetailpage";
 import LectureNoticeListPage from "./pages/Lecture/LectureNotice/LectureNoticeListpage";
-
+import LectureMaterialWritePage from "./pages/Lecture/LectureMaterial/LectureMaterialWritePage";
+import LectureMaterialModifyPage from "./pages/Lecture/LectureMaterial/LectureMaterialModifyPage";
+import LectureNoticeWritePage from "./pages/Lecture/LectureNotice/LectureNoticeWritePage";
+import LectureNoticeModifyPage from "./pages/Lecture/LectureNotice/LectureNoticeModifyPage";
 function Router() {
   const [type, setType] = useState(1); //0은 비회원 1은 학생 2는 교수 3은 관리자
   return (
@@ -37,10 +40,14 @@ function Router() {
           <Route path="/lecture/material">
             <Route path="list" element={<LectureMaterialListPage />} />
             <Route path="detail" element={<LectureMaterialDetailPage />} />
+            <Route path="write" element={<LectureMaterialWritePage />} />
+            <Route path="modify" element={<LectureMaterialModifyPage />} />
           </Route>
           <Route path="/lecture/notice">
             <Route path="list" element={<LectureNoticeListPage />} />
             <Route path="detail" element={<LectureNoticeDetailPage />} />
+            <Route path="write" element={<LectureNoticeWritePage />} />
+            <Route path="modify" element={<LectureNoticeModifyPage />} />
           </Route>
 
           <Route path="/lecture/plan">

@@ -3,17 +3,33 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function LectureMaterialListPage() {
-  const hardcoding = [
-    { lectureid: 1, name: "웹프로그래밍" },
-    { lectureid: 2, name: "고급프로그래밍" },
-    { lectureid: 3, name: "시스템프로그래밍" },
-    { lectureid: 4, name: "알고리즘" },
-  ];
+  //////////////////////////////////////////////////////////////////////////////////////////////
+  /*테스트를 위한 하드코딩 */
 
+  const [hardcodingSubject, setHardcodingSubject] = useState([]);
+  const [hardcodingUserType, setHardcodingUserType] = useState(2);
+  const [hardcodingUserName, setHardcodingUserName] = useState("");
+
+  function student_hardcoding_subject() {
+    setHardcodingUserType(0); //학생
+    setHardcodingUserName("김학생");
+    setHardcodingSubject([
+      { lectureid: 1, name: "웹프로그래밍" },
+      { lectureid: 2, name: "고급프로그래밍" },
+      { lectureid: 3, name: "시스템프로그래밍" },
+      { lectureid: 4, name: "알고리즘" },
+    ]);
+  }
+  function proffesor_hardcoding_subject() {
+    setHardcodingUserType(1); //교수
+    setHardcodingUserName("김교수");
+    setHardcodingSubject([{ lectureid: 1, name: "웹프로그래밍" }]);
+  }
+  ///////////////////////////////////////////////////////////////////////////////
   const navigate = useNavigate();
   const [output, setOutput] = useState([]);
 
-  const [currentSubject, setCurrentSubject] = useState("과목을 선택해주세요");
+  const [currentSubject, setCurrentSubject] = useState("");
 
   const handleSubmit = (e) => {
     //조회 버튼을 눌른 경우 처리
@@ -22,7 +38,7 @@ function LectureMaterialListPage() {
     e.preventDefault();
 
     if (currentSubject === "") {
-      return { ...alert("과목을 선택하세요") };
+      return { ...alert("과목을 선택해주세요.") };
     } else {
       //백서버에서 강의자료 리스트 데이터 가져오기
       axios
@@ -60,6 +76,9 @@ function LectureMaterialListPage() {
                 materialaddress: lecturelist[i].materialaddress,
                 author: lecturelist[i].author,
                 date: lecturelist[i].date,
+                hardcodingUserType: hardcodingUserType,
+                lectureid: currentSubject,
+                id: lecturelist[i].id,
               },
             });
           }}
@@ -80,6 +99,26 @@ function LectureMaterialListPage() {
         <div class="flex justify-start w-[90%] h-[10%] mt-4 text-[40px]">
           강의 자료실
         </div>
+        <div class="flex flex-row justify-start w-[90%]">
+          <button
+            class="flex justify-center items-center border border-black w-[50px] h-[30px] "
+            onClick={() => {
+              //하드코딩 사용
+              student_hardcoding_subject();
+            }}
+          >
+            <div>학생</div>
+          </button>
+          <button
+            class="flex justify-center items-center border border-black w-[50px] h-[30px] "
+            onClick={() => {
+              //하드코딩 사용
+              proffesor_hardcoding_subject();
+            }}
+          >
+            <div>교수</div>
+          </button>
+        </div>
 
         <form
           onSubmit={handleSubmit}
@@ -98,11 +137,14 @@ function LectureMaterialListPage() {
               과목을 선택해주세요
             </option>
             {/* 학생이 수강하는 전체 과목명을 출력하는 option 태그 */}
-            {hardcoding.map((item) => (
-              <option value={item.lectureid} key={item.lectureid}>
-                {item.name}
-              </option>
-            ))}
+            {
+              //하드코딩 사용
+              hardcodingSubject.map((item) => (
+                <option value={item.lectureid} key={item.lectureid}>
+                  {item.name}
+                </option>
+              ))
+            }
           </select>
 
           <input
@@ -111,6 +153,34 @@ function LectureMaterialListPage() {
             class="border border-black w-[50px] h-[30px] cursor-pointer ml-[15px] mt-[15px]"
           />
         </form>
+
+        {
+          //하드코딩 사용
+          hardcodingUserType === 1 ? (
+            <div class="flex justify-end w-[90%] mb-2">
+              <button
+                class="border border-black w-[60px] h-[30px] text-[15px] "
+                onClick={() => {
+                  if (currentSubject === "") {
+                    return { ...alert("과목을 선택해주세요.") };
+                  } else {
+                    navigate("/lecture/material/write", {
+                      state: {
+                        name: hardcodingUserName,
+                        lectureid: currentSubject,
+                      },
+                    });
+                  }
+                }}
+              >
+                글쓰기
+              </button>
+            </div>
+          ) : (
+            <div></div>
+          )
+        }
+
         <div class="flex flex-row justify-center w-[90%]  border-black ">
           <div class="border border-black w-full">번호</div>
           <div class="border border-black w-full">제목</div>
@@ -118,12 +188,12 @@ function LectureMaterialListPage() {
           <div class="border border-black w-full">작성날짜</div>
         </div>
 
-        {output.length === 0 ? (
-          <div className="flex flex-row justify-center w-[90%] h-[60%] border border-black">
+        {output.length === 1 ? (
+          <div className="flex flex-row justify-center w-[90%] h-[48%] border border-black">
             검색결과가 없습니다.
           </div>
         ) : (
-          <div className="flex flex-col  w-[90%] h-[60%] border border-black     ">
+          <div className="flex flex-col  w-[90%] h-[48%] border border-black     ">
             {/* 검색결과 리스트를 출력하는 부분 */}
             <div class="overflow-y-auto w-full">{listitem(output)}</div>
           </div>

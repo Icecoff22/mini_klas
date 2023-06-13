@@ -15,6 +15,37 @@ public class LectureMaterialController {
 
     private final LectureMaterialService lectureMaterialService;
 
+    @PostMapping("/delete")
+    public ResponseEntity deleteLectureMaterial(@RequestBody LectureMaterialDTO data )
+    {
+        try {
+
+
+
+
+            lectureMaterialService.deleteLectureMaterial(data);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    @PostMapping("/write")
+    public ResponseEntity<LectureMaterialDTO>saveLectureMaterial(@RequestBody LectureMaterialDTO data )
+    {
+        try {
+
+
+
+
+            LectureMaterialDTO result = lectureMaterialService.saveLectureMaterial(data);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
     @PostMapping("/list")
     public ResponseEntity<List<LectureMaterialDTO>> getLectureMaterialsByParameter(@RequestBody LectureMaterialDTO data )
     {
@@ -32,5 +63,6 @@ public class LectureMaterialController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 }

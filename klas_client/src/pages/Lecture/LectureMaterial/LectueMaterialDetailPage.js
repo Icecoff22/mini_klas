@@ -1,4 +1,6 @@
 import { useLocation } from "react-router";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { useState } from "react";
 
 function LectureMaterialDetailPage() {
@@ -11,6 +13,34 @@ function LectureMaterialDetailPage() {
   );
   const [author, setAuthor] = useState(location.state.author);
   const [date, setDate] = useState(location.state.date);
+  const [hardcodingUserType, setHardcodingUserType] = useState(
+    location.state.hardcodingUserType
+  ); //하드코딩
+  const [lectureid, setLectureid] = useState(location.state.lectureid);
+  const [id, setId] = useState(location.state.id);
+  const navigate = useNavigate();
+
+  const handOnclick = () => {
+    axios
+      .post("http://localhost:8080/lecture/material/delete", {
+        id: id,
+        lectureid: lectureid,
+        title: title,
+        content: content,
+        materialname: materialname,
+        materialaddress: materialaddress,
+        author: author,
+        date: date,
+      })
+      .then((res) => {
+        console.log(res);
+        navigate("/lecture/material/list");
+        alert("삭제되었습니다.");
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
 
   return (
     <div class="flex flex-col justify-center items-center h-screen border bg-gradient-to-b from-white to-[#C8D6E8]">
@@ -41,6 +71,35 @@ function LectureMaterialDetailPage() {
             <div>{content}</div>
           </div>
         </div>
+
+        {hardcodingUserType === 1 ? (
+          <div class="flex flex-row justify-center mt-2 w-full h-[5%] ">
+            <button
+              class="border border-black w-[50px] mr-2"
+              onClick={() => {
+                navigate("/lecture/material/modify", {
+                  state: {
+                    name: author,
+                    lectureid: lectureid,
+                    id: id,
+                  },
+                });
+              }}
+            >
+              수정
+            </button>
+            <button
+              class="border border-black w-[50px]"
+              onClick={() => {
+                handOnclick();
+              }}
+            >
+              삭제
+            </button>
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
     </div>
   );

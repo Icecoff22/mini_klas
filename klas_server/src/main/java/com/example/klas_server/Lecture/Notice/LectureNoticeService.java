@@ -14,9 +14,15 @@ public class LectureNoticeService {
     @Autowired
     private LectureNoticeRepository lectureNoticeRepository;
 
-    public LectureNoticeDTO saveLectureNotice(LectureNoticeDTO lectureNotice){
-        return (LectureNoticeDTO) lectureNoticeRepository.save(lectureNotice);
+    public LectureNoticeDTO saveLectureNotice(LectureNoticeDTO data){
+        log.info(data.getNoticefileaddress());
+        return (LectureNoticeDTO) lectureNoticeRepository.save(data);
     }
+
+    public void deleteLectureNotice(LectureNoticeDTO data) {
+        lectureNoticeRepository.delete(data);
+    }
+
 
     public List<LectureNoticeDTO> printLectureNoticesByParameter(LectureNoticeDTO data) {
 

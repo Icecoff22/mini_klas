@@ -8,4 +8,5 @@ import java.util.List;
 public interface LectureMaterialRepository extends JpaRepository<LectureMaterialDTO, Integer> {
 
     List<LectureMaterialDTO> findByLectureid(Integer lectureid);
+
 }

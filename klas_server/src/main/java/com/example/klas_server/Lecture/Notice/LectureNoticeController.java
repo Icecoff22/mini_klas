@@ -19,6 +19,38 @@ public class LectureNoticeController {
 
     private final LectureNoticeService lectureNoticeService;
 
+    @PostMapping("/delete")
+    public ResponseEntity deleteLectureNotice(@RequestBody LectureNoticeDTO data )
+    {
+        try {
+
+            lectureNoticeService.deleteLectureNotice(data);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+
+
+    @PostMapping("/write")
+    public ResponseEntity<LectureNoticeDTO>saveLectureNotice(@RequestBody LectureNoticeDTO data )
+    {
+        try {
+
+
+
+
+            LectureNoticeDTO result = lectureNoticeService.saveLectureNotice(data);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+
     @PostMapping("/list")
     public ResponseEntity<List<LectureNoticeDTO>> getLectureNoticesByParameter(@RequestBody LectureNoticeDTO data )
     {

@@ -16,8 +16,12 @@ public class LectureMaterialService {
     @Autowired
     private LectureMaterialRepository lectureMaterialRepository;
 
-    public LectureMaterialDTO saveLectureMaterial(LectureMaterialDTO lectureMaterial){
-        return (LectureMaterialDTO) lectureMaterialRepository.save(lectureMaterial);
+    public LectureMaterialDTO saveLectureMaterial(LectureMaterialDTO data){
+        log.info(data.getMaterialaddress());
+        return (LectureMaterialDTO) lectureMaterialRepository.save(data);
+    }
+    public void deleteLectureMaterial(LectureMaterialDTO data) {
+        lectureMaterialRepository.delete(data);
     }
 
     public List<LectureMaterialDTO> printLectureMaterialsByParameter(LectureMaterialDTO data) {
@@ -32,4 +36,5 @@ public class LectureMaterialService {
         }
         return null;
     }
+
 }
