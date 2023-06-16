@@ -3,12 +3,13 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
 function SignUpPage() {
   const [name, setName] = useState("");
-  const [userId, setUserId] = useState("");
+  const { userId, setUserId, userType, setUserType } = useContext(UserContext);
   const [password, setPaaword] = useState("");
-  const [userType, setUserType] = useState("");
 
   return (
     <div class="flex flex-col justify-center items-center  h-screen bg-gradient-to-b from-white to-[#C8D6E8] ">
@@ -20,11 +21,32 @@ function SignUpPage() {
         <Input type="text" onChange={setPaaword} placeholder="비밀번호" />
         <div class="flex flex-row">
           <label>학생</label>
-          <Input type="radio" onChange={setUserType} placeholder="관리자" />
+          <input
+            name="type"
+            type="radio"
+            value="option1"
+            onClick={() => {
+              setUserType("1");
+            }}
+          />
           <label>교수</label>
-          <Input type="radio" onChange={setUserType} placeholder="관리자" />
+          <input
+            name="type"
+            value="option2"
+            type="radio"
+            onClick={() => {
+              setUserType("2");
+            }}
+          />
           <label>관리자</label>
-          <Input type="radio" onChange={setUserType} placeholder="관리자" />
+          <input
+            name="type"
+            value="option3"
+            type="radio"
+            onClick={() => {
+              setUserType("3");
+            }}
+          />
         </div>
         <div class="flex flex-row">
           <Link to="/">
@@ -33,6 +55,7 @@ function SignUpPage() {
           <Button
             text="가입"
             onClick={() => {
+              console.log(name, userId, password, userType);
               axios
                 .post("http://localhost:8080/users/signup", {
                   params: {
@@ -49,7 +72,7 @@ function SignUpPage() {
                   console.log(err.response);
                 });
             }}
-          />{" "}
+          />
         </div>
       </div>
     </div>

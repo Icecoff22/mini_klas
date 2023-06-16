@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function LectureMaterialListPage() {
+function LectureAssignmentListPage() {
   //////////////////////////////////////////////////////////////////////////////////////////////
   /*변수명은 하드코딩인데 하드코딩 아님*/
 
@@ -36,8 +36,9 @@ function LectureMaterialListPage() {
     } else {
       //백서버에서 강의자료 리스트 데이터 가져오기
       axios
-        .post("http://localhost:8080/lecture/material/list", {
+        .post("http://localhost:8080/lecture/assignment/list", {
           lectureid: currentSubject,
+          status: "공지",
         })
         .then((res) => {
           console.log(res);
@@ -62,17 +63,24 @@ function LectureMaterialListPage() {
         <button
           class="flex flex-row justify-center w-full "
           onClick={() => {
-            navigate("/lecture/material/detail", {
+            navigate("/lecture/assignment/detail", {
               state: {
+                id: lecturelist[i].id,
+                assignmentid: lecturelist[i].assignmentid,
+                lectureid: lecturelist[i].lectureid,
                 title: lecturelist[i].title,
                 content: lecturelist[i].content,
-                materialname: lecturelist[i].materialname,
-                materialaddress: lecturelist[i].materialaddress,
+                attachmentname: lecturelist[i].attachmentname,
+                attachmentaddress: lecturelist[i].attachmentaddress,
+                deadline: lecturelist[i].deadline,
+                status: lecturelist[i].status,
+                userid: lecturelist[i].userid,
                 author: lecturelist[i].author,
                 date: lecturelist[i].date,
+
+                hardcodingUserId: hardcodingUserId,
                 hardcodingUserType: hardcodingUserType,
-                lectureid: currentSubject,
-                id: lecturelist[i].id,
+                hardcodingUserName: hardcodingUserName,
               },
             });
           }}
@@ -80,7 +88,9 @@ function LectureMaterialListPage() {
           <div class="border border-black w-full">{i + 1}</div>
           <div class="border border-black w-full">{lecturelist[i].title}</div>
           <div class="border border-black w-full">{lecturelist[i].author}</div>
-          <div class="border border-black w-full">{lecturelist[i].date}</div>
+          <div class="border border-black w-full">
+            {lecturelist[i].deadline}
+          </div>
         </button>
       );
     }
@@ -91,7 +101,7 @@ function LectureMaterialListPage() {
     <div class="flex flex-col justify-center items-center h-screen border bg-gradient-to-b from-white to-[#C8D6E8]">
       <div class="flex justify-center flex-col items-center h-[600px] w-[1400px] border border-black">
         <div class="flex justify-start w-[90%] h-[10%] mt-4 text-[40px]">
-          강의 자료실
+          과제 제출
         </div>
 
         <form
@@ -115,7 +125,7 @@ function LectureMaterialListPage() {
               //하드코딩 사용
               hardcodingSubject.map((item) => (
                 <option value={item.lectureid} key={item.lectureid}>
-                  {item.name}
+                  {item.lecturename}
                 </option>
               ))
             }
@@ -133,21 +143,23 @@ function LectureMaterialListPage() {
           hardcodingUserType === 1 ? (
             <div class="flex justify-end w-[90%] mb-2">
               <button
-                class="border border-black w-[60px] h-[30px] text-[15px] "
+                class="border border-black w-[100px] h-[30px] text-[15px] "
                 onClick={() => {
                   if (currentSubject === "") {
                     return { ...alert("과목을 선택해주세요.") };
                   } else {
-                    navigate("/lecture/material/write", {
+                    navigate("/lecture/assignment/write", {
                       state: {
                         name: hardcodingUserName,
                         lectureid: currentSubject,
+                        userid: hardcodingUserId,
+                        status: "공지",
                       },
                     });
                   }
                 }}
               >
-                글쓰기
+                과제 업로드
               </button>
             </div>
           ) : (
@@ -159,7 +171,7 @@ function LectureMaterialListPage() {
           <div class="border border-black w-full">번호</div>
           <div class="border border-black w-full">제목</div>
           <div class="border border-black w-full">작성자</div>
-          <div class="border border-black w-full">작성날짜</div>
+          <div class="border border-black w-full">마감날짜</div>
         </div>
 
         {output.length === 0 ? (
@@ -176,4 +188,4 @@ function LectureMaterialListPage() {
     </div>
   );
 }
-export default LectureMaterialListPage;
+export default LectureAssignmentListPage;

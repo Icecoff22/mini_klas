@@ -79,7 +79,7 @@ function LectureMaterialDetailPage() {
               onClick={() => {
                 navigate("/lecture/material/modify", {
                   state: {
-                    name: author,
+                    author: author,
                     lectureid: lectureid,
                     id: id,
                   },
@@ -91,7 +91,10 @@ function LectureMaterialDetailPage() {
             <button
               class="border border-black w-[50px]"
               onClick={() => {
-                handOnclick();
+                if (window.confirm("정말로 삭제하시겠습니까?")) {
+                  handOnclick();
+                } else {
+                }
               }}
             >
               삭제
